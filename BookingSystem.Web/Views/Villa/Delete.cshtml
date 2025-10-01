@@ -1,0 +1,68 @@
+﻿@model Villa
+
+<div class="container py-4">
+    <div class="card shadow border-0 mb-4">
+        <div class="card-header bg-success bg-gradient text-white d-flex justify-content-between align-items-center">
+            <h2 class="mb-0">Delete Villa</h2>
+            <a asp-action="Index" class="btn btn-light text-success">
+                <i class="bi bi-arrow-left-circle"></i> Back to List
+            </a>
+        </div>
+        <div class="card-body">
+            <form asp-action="Delete" disabled method="post">
+
+                <input asp-for="Id" hidden />
+
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" disabled class="form-control" />
+                  
+                </div>
+
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label"></label>
+                    <input asp-for="Description"disabled class="form-control" />
+                 
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Price" class="form-label"></label>
+                    <input asp-for="Price" disabled class="form-control" />
+              
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Sqft" class="form-label"></label>
+                    <input asp-for="Sqft" disabled class="form-control" />
+               
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Occupancy" class="form-label"></label>
+                    <input asp-for="Occupancy" disabled class="form-control" />
+                  
+                </div>
+
+
+                <div class="mb-3">
+                    <label asp-for="ImageUrl"  class="form-label"></label>
+                    <input asp-for="ImageUrl" disabled class="form-control" />
+          
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-outline-danger">
+                        <i class="bi bi-trash-fill"></i> Delete
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

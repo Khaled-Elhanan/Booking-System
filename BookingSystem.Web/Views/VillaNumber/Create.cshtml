@@ -1,0 +1,52 @@
+﻿@model VillaNumberVM
+
+<div class="container py-4">
+	<div class="card shadow border-0 mb-4">
+		<div class="card-header bg-success bg-gradient text-white d-flex justify-content-between align-items-center">
+			<h2 class="mb-0">Create Villa</h2>
+			<a asp-action="Index" class="btn btn-light text-success">
+				<i class="bi bi-arrow-left-circle"></i> Back to List
+			</a>
+		</div>
+		<div class="card-body">
+			<form asp-action="Create" method="post">
+				<div class="mb-3">
+					<label asp-for="VillaNumber.VillaId" class="form-label"></label>
+					<select asp-for="VillaNumber.VillaId" asp-items="@Model.VillaList"
+							class="form-select border shadow">
+						<option disabled selected>-- Select Villa </option>
+					</select>
+					<span asp-validation-for="VillaNumber.VillaId" class="text-danger"></span>
+				</div>
+
+
+				<div class="mb-3">
+					<label asp-for="VillaNumber.Villa_Number" class="form-label"></label>
+					<input asp-for="VillaNumber.Villa_Number" class="form-control" />
+					<span asp-validation-for="VillaNumber.Villa_Number" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label asp-for="VillaNumber.SpecialDetails" class="form-label"></label>
+					<input asp-for="VillaNumber.SpecialDetails" class="form-control" />
+					<span asp-validation-for="VillaNumber.SpecialDetails" class="text-danger"></span>
+				</div>
+
+
+
+				<div class="text-end">
+					<button type="submit" class="btn btn-success">
+						<i class="bi bi-check-circle"></i> Create
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	@{
+		<partial name="_ValidationScriptsPartial" />
+		//await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}
