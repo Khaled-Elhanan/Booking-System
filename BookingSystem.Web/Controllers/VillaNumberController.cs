@@ -5,6 +5,7 @@ using BookingSystem.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata.Ecma335;
 
 namespace BookingSystem.Web.Controllers
 {
@@ -61,51 +62,74 @@ namespace BookingSystem.Web.Controllers
            
             
         }
-
-
-        //public IActionResult Edit(int id)
-        //{
-        //    Villa? obj = _context.VillaNumbers.FirstOrDefault(x => x.VillaId == id);
-        //    if (obj == null)
-        //    {
-        //        return RedirectToAction("Error", "Home");
-        //    }
-        //    return View(obj);
-        //}
-
-        //[HttpPost]
-        //public IActionResult Edit(villaNumber obj)
-        //{
-        //    _context.VillaNumbers.Update(obj);
-        //    _context.SaveChanges();
-        //    TempData["success"] = "The villa has been updated successfuly";
-        //    return RedirectToAction("Index");
-        //}
-
-
-        public IActionResult Delete(int id)
+        public IActionResult Edit(int villaNumberId)
         {
+            
             VillaNumberVM villaNumberVM = new()
             {
-                VillaList = _context.Villas.ToList().Select(x => new SelectListItem
+                VillaList = _context.Villas.Select(v => new SelectListItem
                 {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                })
+                    Text = v.Name,
+                    Value = v.Id.ToString()
+                }),
+                VillaNumber=_context.VillaNumbers.FirstOrDefault(x => x.Villa_Number == villaNumberId)
             };
 
-            var obj = _context.VillaNumbers.FirstOrDefault(x => x.Villa_Number == id);
+            if (villaNumberVM == null) {
+                return RedirectToAction("Error","Home");
+            }
+            return View(villaNumberVM);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(VillaNumberVM vm)
+        {
+         
+
+            if (ModelState.IsValid )
+            {
+                _context.VillaNumbers.Update(vm.VillaNumber);
+                _context.SaveChanges();
+                TempData["success"] = "The villa Number has been updated successfuly";
+                return RedirectToAction("Index");
+            }
+         
+            vm.VillaList = _context.Villas.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
+            return View(vm);
+
+        }
+
+
+
+
+        public IActionResult Delete(int villaNumberId)
+        {
+            var obj = _context.VillaNumbers
+                .Include(v => v.Villa)
+                .FirstOrDefault(x => x.Villa_Number == villaNumberId);
             return View(obj);
 
         }
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePost(int id)
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePost(VillaNumber vm)
         {
-            var obj = _context.VillaNumbers.FirstOrDefault(x => x.Villa_Number == id);
-            _context.VillaNumbers.Remove(obj);
-            _context.SaveChanges();
-            TempData["success"] = "The villa has been deleted successfuly";
-            return RedirectToAction("Index");
+            VillaNumber? objFromDb = _context.VillaNumbers
+                .FirstOrDefault(u => u.Villa_Number == vm.Villa_Number);
+            if(objFromDb is not null)
+            {
+                _context.VillaNumbers.Remove(objFromDb);
+                _context.SaveChanges();
+                TempData["success"] = "The villa has been deleted successfuly";
+                return RedirectToAction("Index");
+            }
+            TempData["error"] = "The villa number could not be deleted ";
+            return View();
         }
 
 

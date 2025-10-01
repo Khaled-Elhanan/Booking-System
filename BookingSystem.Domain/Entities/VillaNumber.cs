@@ -17,8 +17,9 @@ namespace BookingSystem.Domain.Entities
 
         [ForeignKey("Villa")]
         public int VillaId { get; set; }
-        //[ValidateNever]
-        public Villa Villa { get; set;  }
+        [ValidateNever]
+        public Villa? Villa { get; set;  }
+        [Display(Name ="Special Details ")]
         public string ? SpecialDetails { get; set; }
     }
 }

@@ -10,6 +10,7 @@
 		</div>
 		<div class="card-body">
 			<form asp-action="Delete" method="post">
+				@Html.AntiForgeryToken()
 				<input asp-for="Villa_Number" hidden />
 				<div class="mb-3">
 				
