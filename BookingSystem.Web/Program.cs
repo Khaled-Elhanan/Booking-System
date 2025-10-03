@@ -1,4 +1,6 @@
+using BookingSystem.Application.Common.Interfaces;
 using BookingSystem.Infrastructure.Data;
+using BookingSystem.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,9 @@ builder.Services.AddControllersWithViews();
 // DbContext Serivce 
 builder.Services.AddDbContext<ApplicationDbContext>
     (options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Repository registration
+builder.Services.AddScoped<IVillaRepository, VillaRepository>();    
 
 var app = builder.Build();
 

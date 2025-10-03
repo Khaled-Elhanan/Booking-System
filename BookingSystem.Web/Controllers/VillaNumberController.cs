@@ -105,8 +105,6 @@ namespace BookingSystem.Web.Controllers
         }
 
 
-
-
         public IActionResult Delete(int villaNumberId)
         {
             var obj = _context.VillaNumbers
