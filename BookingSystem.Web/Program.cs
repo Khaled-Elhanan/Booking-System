@@ -13,7 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>
     (options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Repository registration
-builder.Services.AddScoped<IVillaRepository, VillaRepository>();    
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();    
 
 var app = builder.Build();
 

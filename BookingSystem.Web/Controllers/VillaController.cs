@@ -9,14 +9,15 @@ namespace BookingSystem.Web.Controllers
     
     public class VillaController : Controller
     {
-        private readonly IVillaRepository _villaRepo;
-        public VillaController(IVillaRepository villaRepo)
+        private readonly IUnitOfWork   _unitOfWork;
+        public VillaController(IUnitOfWork unitOfWork)
         {
-            _villaRepo = villaRepo;
+            _unitOfWork=unitOfWork;
+           
         }
         public IActionResult Index()
         {
-            var vaills = _villaRepo.GetAll();
+            var vaills = _unitOfWork.Villa.GetAll();
             return View(vaills);
         }
 
@@ -30,8 +31,8 @@ namespace BookingSystem.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Villa obj)
         {
-            _villaRepo.Add(obj);
-            _villaRepo.Save();
+            _unitOfWork.Villa.Add(obj);
+            _unitOfWork.Villa.Save();
             TempData["success"] = "The villa has been created successfuly";
             return RedirectToAction("Index");
         }
@@ -39,7 +40,7 @@ namespace BookingSystem.Web.Controllers
         
         public IActionResult Edit(int id )
         {
-            Villa? obj = _villaRepo.Get(x => x.Id == id);
+            Villa? obj = _unitOfWork.Villa.Get(x => x.Id == id);
             if(obj==null)
             {
                 return RedirectToAction("Error", "Home");
@@ -50,8 +51,8 @@ namespace BookingSystem.Web.Controllers
         [HttpPost]
         public IActionResult Edit(Villa obj  )
         {
-            _villaRepo.Update(obj);
-            _villaRepo.Save();
+            _unitOfWork.Villa.Update(obj);
+            _unitOfWork.Villa.Save();
             TempData["success"] = "The villa has been updated successfuly";
             return RedirectToAction("Index");
         }
@@ -59,16 +60,16 @@ namespace BookingSystem.Web.Controllers
 
         public IActionResult Delete(int id)
         {
-            var obj = _villaRepo.Get(x => x.Id == id);
+            var obj = _unitOfWork.Villa.Get(x => x.Id == id);
             return View(obj);
 
         }
         [HttpPost,ActionName("Delete")]
         public IActionResult DeletePost(int id)
         {
-            var obj = _villaRepo.Get(x => x.Id == id);
-            _villaRepo.Remove(obj);
-            _villaRepo.Save();
+            var obj = _unitOfWork.Villa.Get(x => x.Id == id);
+            _unitOfWork.Villa.Remove(obj);
+            _unitOfWork.Villa.Save();
             TempData["success"] = "The villa has been deleted successfuly";
             return RedirectToAction("Index");
         }
