@@ -32,7 +32,7 @@ namespace BookingSystem.Web.Controllers
         public IActionResult Create(Villa obj)
         {
             _unitOfWork.Villa.Add(obj);
-            _unitOfWork.Villa.Save();
+            _unitOfWork.Save();
             TempData["success"] = "The villa has been created successfuly";
             return RedirectToAction("Index");
         }
@@ -52,7 +52,7 @@ namespace BookingSystem.Web.Controllers
         public IActionResult Edit(Villa obj  )
         {
             _unitOfWork.Villa.Update(obj);
-            _unitOfWork.Villa.Save();
+            _unitOfWork.Save();
             TempData["success"] = "The villa has been updated successfuly";
             return RedirectToAction("Index");
         }
@@ -69,7 +69,7 @@ namespace BookingSystem.Web.Controllers
         {
             var obj = _unitOfWork.Villa.Get(x => x.Id == id);
             _unitOfWork.Villa.Remove(obj);
-            _unitOfWork.Villa.Save();
+            _unitOfWork.Save();
             TempData["success"] = "The villa has been deleted successfuly";
             return RedirectToAction("Index");
         }

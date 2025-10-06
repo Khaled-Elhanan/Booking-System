@@ -15,11 +15,6 @@ namespace BookingSystem.Infrastructure.Repository
         }
 
 
-        public void Save()
-        {
-            _context.SaveChanges();
-        }
-
         public void Update(Villa entity)
         {
             _context.Villas.Update(entity);
