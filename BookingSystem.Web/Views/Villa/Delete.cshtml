@@ -9,52 +9,53 @@
             </a>
         </div>
         <div class="card-body">
-            <form asp-action="Delete" disabled method="post">
+            <form asp-action="Delete" method="post">
                     @*الي عندي  View  مهم جدا"اني اكتب دي علشانا عرض البيانات الي كانت موجوده في ال " *@
                 <input asp-for="Id" hidden />
 
-                <div class="mb-3">
-                    <label asp-for="Name" class="form-label"></label>
-                    <input asp-for="Name" disabled class="form-control" />
-                  
-                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label"></label>
+                            <input asp-for="Name" disabled class="form-control" />
+                        </div>
 
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label"></label>
+                            <input asp-for="Description" disabled class="form-control" />
+                        </div>
 
-                <div class="mb-3">
-                    <label asp-for="Description" class="form-label"></label>
-                    <input asp-for="Description"disabled class="form-control" />
-                 
-                </div>
+                        <div class="mb-3">
+                            <label asp-for="Price" class="form-label"></label>
+                            <input asp-for="Price" disabled class="form-control" />
+                        </div>
 
-                <div class="mb-3">
-                    <label asp-for="Price" class="form-label"></label>
-                    <input asp-for="Price" disabled class="form-control" />
-              
-                </div>
+                        <div class="mb-3">
+                            <label asp-for="Sqft" class="form-label"></label>
+                            <input asp-for="Sqft" disabled class="form-control" />
+                        </div>
 
-                <div class="mb-3">
-                    <label asp-for="Sqft" class="form-label"></label>
-                    <input asp-for="Sqft" disabled class="form-control" />
-               
-                </div>
+                        <div class="mb-3">
+                            <label asp-for="Occupancy" class="form-label"></label>
+                            <input asp-for="Occupancy" disabled class="form-control" />
+                        </div>
 
-                <div class="mb-3">
-                    <label asp-for="Occupancy" class="form-label"></label>
-                    <input asp-for="Occupancy" disabled class="form-control" />
-                  
-                </div>
+                        <div class="mb-3">
+                            <label asp-for="ImageUrl" class="form-label"></label>
+                            <input asp-for="ImageUrl" disabled class="form-control" />
+                        </div>
 
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-outline-danger">
+                                <i class="bi bi-trash-fill"></i> Delete
+                            </button>
+                        </div>
+                    </div>
 
-                <div class="mb-3">
-                    <label asp-for="ImageUrl"  class="form-label"></label>
-                    <input asp-for="ImageUrl" disabled class="form-control" />
-          
-                </div>
-
-                <div class="text-end">
-                    <button type="submit" class="btn btn-outline-danger">
-                        <i class="bi bi-trash-fill"></i> Delete
-                    </button>
+                    <div class="col-md-4 d-flex align-items-center justify-content-center">
+                        <img src="@Model.ImageUrl" alt="Villa Image" class="img-fluid rounded shadow-sm"
+                             style="max-height: 250px; object-fit: cover;" />
+                    </div>
                 </div>
             </form>
         </div>

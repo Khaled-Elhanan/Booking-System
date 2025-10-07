@@ -1,21 +1,29 @@
-using System.Diagnostics;
-using BookingSystem.Web.Models;
+using BookingSystem.Application.Common.Interfaces;
+using BookingSystem.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingSystem.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IUnitOfWork _unitOfWork;
+        public HomeController(IUnitOfWork unitOfWork)
         {
-            _logger = logger;
+            
+            _unitOfWork=unitOfWork;
         }
 
         public IActionResult Index()
         {
-            return View();
+            HomeVM homeVM = new()
+            {
+                VillaList = _unitOfWork.Villa.GetAll(includeProperties: "VillaAmentiy")  ,
+                CheckInDate= DateOnly.FromDateTime(DateTime.Now),
+                
+                Nights= 1
+            };
+            
+            return View(homeVM);
         }
 
         public IActionResult Privacy()

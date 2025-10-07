@@ -8,53 +8,64 @@
                 <i class="bi bi-arrow-left-circle"></i> Back to List
             </a>
         </div>
-        <div class="card-body">
-            <form asp-action="Edit" method="post">
 
+        <div class="card-body">
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
                 <input asp-for="Id" hidden />
 
-                <div class="mb-3">
-                    <label asp-for="Name" class="form-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
+                <div class="row">
+                    <!-- Left side (form inputs) -->
+                    <div class="col-md-8">
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
 
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label"></label>
+                            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
 
-                <div class="mb-3">
-                    <label asp-for="Description" class="form-label"></label>
-                    <input asp-for="Description" class="form-control" />
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
+                        <div class="mb-3">
+                            <label asp-for="Price" class="form-label"></label>
+                            <input asp-for="Price" class="form-control" type="number" step="0.01" />
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
 
-                <div class="mb-3">
-                    <label asp-for="Price" class="form-label"></label>
-                    <input asp-for="Price" class="form-control" />
-                    <span asp-validation-for="Price" class="text-danger"></span>
-                </div>
+                        <div class="mb-3">
+                            <label asp-for="Sqft" class="form-label"></label>
+                            <input asp-for="Sqft" class="form-control" type="number" />
+                            <span asp-validation-for="Sqft" class="text-danger"></span>
+                        </div>
 
-                <div class="mb-3">
-                    <label asp-for="Sqft" class="form-label"></label>
-                    <input asp-for="Sqft"  class="form-control" />
-                    <span asp-validation-for="Sqft" class="text-danger"></span>
-                </div>
+                        <div class="mb-3">
+                            <label asp-for="Occupancy" class="form-label"></label>
+                            <input asp-for="Occupancy" class="form-control" type="number" />
+                            <span asp-validation-for="Occupancy" class="text-danger"></span>
+                        </div>
 
-                <div class="mb-3">
-                    <label asp-for="Occupancy" class="form-label"></label>
-                    <input asp-for="Occupancy" class="form-control" />
-                    <span asp-validation-for="Occupancy" class="text-danger"></span>
-                </div>
+                        <div class="mb-3">
 
+                            <label asp-for="ImageUrl" class="form-label"></label>
+                            <input asp-for="ImageUrl" hidden class="form-control" />
+                            <input asp-for="Image" class="form-control" />
+                            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                        </div>
 
-                <div class="mb-3">
-                    <label asp-for="ImageUrl" class="form-label"></label>
-                    <input asp-for="ImageUrl" class="form-control" />
-                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
-                </div>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-check-circle"></i> Update
+                            </button>
+                        </div>
+                    </div>
 
-                <div class="text-end">
-                    <button type="submit" class="btn btn-success">
-                        <i class="bi bi-check-circle"></i> Update
-                    </button>
+             
+                    <div class="col-md-4 d-flex align-items-center justify-content-center">
+                        <img src="@Model.ImageUrl" alt="Villa Image" class="img-fluid rounded shadow-sm"
+                             style="max-height: 250px; object-fit: cover;" />
+                    </div>
                 </div>
             </form>
         </div>
@@ -62,7 +73,5 @@
 </div>
 
 @section Scripts {
-    @{
-        <partial name="_ValidationScriptsPartial" />
-    }
+    <partial name="_ValidationScriptsPartial" />
 }

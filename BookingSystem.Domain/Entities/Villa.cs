@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,10 +20,15 @@ namespace BookingSystem.Domain.Entities
 
         public int Sqft { get; set; }
         public int Occupancy { get; set; }
-        
+        [NotMapped]
+        public IFormFile ? Image { get; set; }
         public string ? ImageUrl { get; set; }
 
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
-        public DateTime UpdatedDate { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; set; } 
+        public DateTime UpdatedDate { get; set; }
+
+        [ValidateNever]
+        public  IEnumerable<Amenity> VillaAmentiy { get; set; }
+
     }
 }
