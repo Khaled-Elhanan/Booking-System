@@ -12,6 +12,7 @@ namespace BookingSystem.Application.Common.Interfaces
         IVillaNumberRepository VillaNumber { get; }
         IAmenityRepository Amenity { get; }
         void Save();
+        
 
     }
 }
