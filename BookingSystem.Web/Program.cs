@@ -9,28 +9,29 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+//-----------------------------------------------//
 // DbContext Serivce 
 builder.Services.AddDbContext<ApplicationDbContext>
-    (options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+    (options => options.UseSqlServer
+    (builder.Configuration.GetConnectionString("DefaultConnection")));
+//-----------------------------------------------//
 // Repository registration
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
+//-----------------------------------------------//
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
-
+//-----------------------------------------------//
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.AccessDeniedPath = "/Account/AccessDenied";
     options.LoginPath = "/Account/Login";
 });
-
+//-----------------------------------------------//
 builder.Services.Configure<IdentityOptions>(option =>
 {
     option.Password.RequiredLength = 6;    
 } );
-
+//-----------------------------------------------//
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

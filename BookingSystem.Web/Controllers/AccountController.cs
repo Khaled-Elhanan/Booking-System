@@ -5,9 +5,6 @@ using BookingSystem.Web.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
-using System.Threading.Tasks;
-
 namespace BookingSystem.Web.Controllers
 {
     public class AccountController : Controller
@@ -38,19 +35,32 @@ namespace BookingSystem.Web.Controllers
             return View(loginVM);
         }
 
-
-        public async Task<IActionResult> Logout()
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginVM loginVM)
         {
-            await _signInManager.SignOutAsync();
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.
+                     PasswordSignInAsync(loginVM.Email, loginVM.Password,
+                     loginVM.RememberMe, lockoutOnFailure: false);
+                if (result.Succeeded)
+                {
+                    if (!string.IsNullOrEmpty(loginVM.RedirectUrl))
+                    {
+                        return LocalRedirect(loginVM.RedirectUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Invalid login attempts");
+                }
+            }
 
-
-            return RedirectToAction("Index", "Home");
-        }
-
-
-        public IActionResult AccessDenied()
-        {
-            return View();
+            return View(loginVM);
         }
 
         public IActionResult Register(string returnUrl = null)
@@ -125,31 +135,16 @@ namespace BookingSystem.Web.Controllers
         }
 
 
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginVM loginVM)
+        public IActionResult AccessDenied()
         {
-            if (ModelState.IsValid)
-            {
-                var result = await _signInManager.
-                     PasswordSignInAsync(loginVM.Email, loginVM.Password, loginVM.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
-                {
-                    if (!string.IsNullOrEmpty(loginVM.RedirectUrl))
-                    {
-                        return LocalRedirect(loginVM.RedirectUrl);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Invalid login attempts");
-                }
-            }
+            return View();
+        }
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
 
-            return View(loginVM);
+
+            return RedirectToAction("Index", "Home");
         }
 
     }

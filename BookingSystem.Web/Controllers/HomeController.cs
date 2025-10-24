@@ -26,6 +26,42 @@ namespace BookingSystem.Web.Controllers
             return View(homeVM);
         }
 
+        [HttpPost]
+        public IActionResult Index(HomeVM homeVM)
+        {
+            homeVM.VillaList = _unitOfWork.Villa.GetAll(includeProperties: "VillaAmentiy");  
+            foreach(var villa in homeVM.VillaList)
+            {
+                if(villa.Id %2==0)
+                {
+                    villa.IsAvailable = false; 
+                }
+            }
+            
+
+            return View(homeVM);
+        }
+
+
+        [HttpPost]
+        public IActionResult GetVillasByDate(HomeVM homeVM)
+        {
+            var villasList = _unitOfWork.Villa.GetAll(includeProperties: "VillaAmentiy");
+            foreach (var villa in villasList)
+            {
+                if (villa.Id % 2 == 0)
+                {
+                    villa.IsAvailable = false;
+                }
+            }
+            homeVM.VillaList = villasList;
+            
+            // Add success message for AJAX response
+            TempData["success"] = $"Availability checked for {homeVM.CheckInDate:MMM dd, yyyy} - {homeVM.Nights} night(s)";
+            
+            return PartialView("_VillaList", homeVM);
+        }
+
         public IActionResult Privacy()
         {
             return View();
