@@ -4,6 +4,7 @@ using BookingSystem.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookingSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251024045818_AddBookingToDB")]
+    partial class AddBookingToDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -538,7 +541,7 @@ namespace BookingSystem.Infrastructure.Migrations
             modelBuilder.Entity("BookingSystem.Domain.Entities.Amenity", b =>
                 {
                     b.HasOne("BookingSystem.Domain.Entities.Villa", "Villa")
-                        .WithMany("VillaAmenities")
+                        .WithMany("VillaAmentiy")
                         .HasForeignKey("VillaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -629,7 +632,7 @@ namespace BookingSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("BookingSystem.Domain.Entities.Villa", b =>
                 {
-                    b.Navigation("VillaAmenities");
+                    b.Navigation("VillaAmentiy");
 
                     b.Navigation("VillaNumbers");
                 });

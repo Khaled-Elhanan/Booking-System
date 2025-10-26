@@ -10,11 +10,11 @@
                 <p class="card-text" style="font-size:large">
                     @Model.Description
                 </p>
-                @if (Model.VillaAmentiy != null && Model.VillaAmentiy.Count() > 0)
+                @if (Model.VillaAmenities != null && Model.VillaAmenities.Count() > 0)
                 {
                     <p class="h5 text-white">Villa Amenities</p>
                     <ul>
-                        @foreach (var amenity in Model.VillaAmentiy)
+                        @foreach (var amenity in Model.VillaAmenities)
                         {
                             <li>@amenity.Name</li>
                         }

@@ -17,7 +17,7 @@ namespace BookingSystem.Web.Controllers
         {
             HomeVM homeVM = new()
             {
-                VillaList = _unitOfWork.Villa.GetAll(includeProperties: "VillaAmentiy")  ,
+                VillaList = _unitOfWork.Villa.GetAll(includeProperties: "VillaAmenities")  ,
                 CheckInDate= DateOnly.FromDateTime(DateTime.Now),
                 
                 Nights= 1
@@ -26,27 +26,13 @@ namespace BookingSystem.Web.Controllers
             return View(homeVM);
         }
 
-        [HttpPost]
-        public IActionResult Index(HomeVM homeVM)
-        {
-            homeVM.VillaList = _unitOfWork.Villa.GetAll(includeProperties: "VillaAmentiy");  
-            foreach(var villa in homeVM.VillaList)
-            {
-                if(villa.Id %2==0)
-                {
-                    villa.IsAvailable = false; 
-                }
-            }
-            
-
-            return View(homeVM);
-        }
+       
 
 
         [HttpPost]
-        public IActionResult GetVillasByDate(HomeVM homeVM)
+        public IActionResult GetVillasByDate(int nights , DateOnly checkInDate)
         {
-            var villasList = _unitOfWork.Villa.GetAll(includeProperties: "VillaAmentiy");
+            var villasList = _unitOfWork.Villa.GetAll(includeProperties: "VillaAmenities");
             foreach (var villa in villasList)
             {
                 if (villa.Id % 2 == 0)
@@ -54,11 +40,14 @@ namespace BookingSystem.Web.Controllers
                     villa.IsAvailable = false;
                 }
             }
-            homeVM.VillaList = villasList;
-            
-            // Add success message for AJAX response
-            TempData["success"] = $"Availability checked for {homeVM.CheckInDate:MMM dd, yyyy} - {homeVM.Nights} night(s)";
-            
+            HomeVM homeVM = new()
+            {
+                CheckInDate = checkInDate,
+                VillaList = villasList,
+                
+                Nights = nights
+
+            };
             return PartialView("_VillaList", homeVM);
         }
 

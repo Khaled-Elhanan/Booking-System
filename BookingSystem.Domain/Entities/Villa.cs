@@ -23,7 +23,7 @@ namespace BookingSystem.Domain.Entities
         public DateTime UpdatedDate { get; set; }
 
         [ValidateNever]
-        public  IEnumerable<Amenity> VillaAmentiy { get; set; }
+        public  IEnumerable<Amenity> VillaAmenities { get; set; }
 
         [ValidateNever]
         public IEnumerable<VillaNumber> VillaNumbers { get; set; }
