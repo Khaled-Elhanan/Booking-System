@@ -25,21 +25,16 @@ namespace BookingSystem.Web.Controllers
             Booking booking = new()
             {
                 VillaId = villaId,
-                Villa = _unitOfWork.Villa.Get(v => v.Id == villaId, includeProperties:"VillaAmenities"),
-                // Booking date: when the booking was made (current date/time)
+                Villa = _unitOfWork.Villa.Get(v => v.Id == villaId, includeProperties:"VillaAmenities"),             
                 BookingDate = DateTime.Now,
-                // Check-in date: the date the guest will arrive
                 CheckInDate = checkInDate.ToDateTime(TimeOnly.MinValue),
                 Nights = nights,
-                // Check-out date: the date after spending all nights (checkInDate + nights)
-                // Example: Check-in Jan 1st, 3 nights = Check-out Jan 4th
                 CheckOutDate = checkInDate.AddDays(nights).ToDateTime(TimeOnly.MinValue),
                 UserId=userId ,
                 Phone=user.PhoneNumber,
                 Email=user.Email,
                 Name=user.Name
 
-                
             };
             booking.TotalCost = booking.Villa.Price * nights;
             return View(booking);
